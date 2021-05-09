@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Blog 写作环境</title>
+      <link href="2021/05/09/hexoenv/"/>
+      <url>2021/05/09/hexoenv/</url>
+      
+        <content type="html"><![CDATA[<p>博客写了一段时间了，稍微记录一下常用的一些配置，也防止之后遗忘。</p><h2 id="Markdown-写作"><a href="#Markdown-写作" class="headerlink" title="Markdown 写作"></a>Markdown 写作</h2><p>Markdown 是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p><p>支持 Markdown 语法的编辑器很多，目前我选择的是 <a href="https://www.typora.io/">Typora</a> 。它是一款免费的 Markdown 编辑器，界面非常简洁优雅，功能也很强大（下文会介绍到），目前来说使用体验很棒~</p><h2 id="图床与图片上传管理"><a href="#图床与图片上传管理" class="headerlink" title="图床与图片上传管理"></a>图床与图片上传管理</h2><p>写博客肯定离不开图，不管是笔记还是游记，多元化的信息可以使阅读变得更轻松。</p><p>如果使用本地图片，等待编译完再上传，一旦图片总大小比较大时，限制可能会比较多，而且也不太适于多人编辑。图床，顾名思义就是进行图片存储的服务器，同时允许对外连接网络，所有人可以访问。使用图床的好处并不止于博客，于各大论坛回帖时，使用图床能够很方便地上传高清图片，而不会受到论坛的限制。</p><p>有了图床，我们可以将图片（或 GIF 等）返回一个 URL 链接，而不需要专门编辑、存放、管理众多杂乱无章的图片，直接复制、粘到 Markdown 编辑器里就能显示出来。但是一旦图片数量多起来，反复切换应用与浏览器、复制粘贴链接都是比较麻烦的。这个时候我建议使用图片上传软件 <a href="https://github.com/PicGo/">PicGo</a> 。PicGo 不仅是图片上传工具，同时也提供简易的图床相册管理功能。PicGo 开源且免费，跨平台支持 Windows、macOS、Linux 系统，使用极为简单。</p><p>初始配置存储方案，我目前使用的是 SMMS 。首先进入 <a href="https://sm.ms/">SMMS图床</a>，注册登录之后，点击右上角「User - Dashboard」，在「APItoken」中可以查看个人专属 Secret Token 。PicGo 中，打开「插件设置」，搜索「SMMS」，即可安装，然后将 token 复制到「图床设置 - SM.MS 图床」，完成配置。</p><p>使用时，拖放图片到主窗口或 mini 窗口（macOS 为顶部状态栏），PicGo 会自动上传至云服务器并返回链接到剪贴板，直接粘贴即可使用。而且 PicGo 还支持直接将剪贴板图片或 URL 一键上传。</p><p>PicGo 同时也提供简易的图床相册管理功能，打开「相册区」，可以看到当前图床中所有的图片集合，支持复制、修改 URL 和删除的操作。</p><h2 id="软件联动"><a href="#软件联动" class="headerlink" title="软件联动"></a>软件联动</h2><p>之所以推荐 PicGo ，很大一部分原因是它带有大量强大的插件。2.0 版本之后，你可以简单通过「插件设置」页面，搜索安装插件。安装完成后，可以点击插件右下方齿轮图标，进行更新、禁用、卸载、配置及使用等功能。（注意：由于 PicGo 要使用 npm 来安装插件，所以用户必须先安装 <a href="https://nodejs.org/en/">Node.js</a> ，使用 Hexo 的话应该已经装过了吧^_^）</p><ul><li>vs-picgo ：VScode 中使用（VScode 有 PicGo 插件，需要在扩展市场先安装再配置）。</li><li>picgo-plugin-super-prefix ：自定义图像文件名和前缀。</li><li>picgo-plugin-quick-capture ：<strong>仅支持 2.2.0+ 版本的 PicGo</strong>，提供一键截图 + 上传的功能。</li><li>picgo-plugin-pic-migrater ：Markdown 文件中图片的<strong>图床迁移</strong>。大致分三步：<ul><li>进入 PicGo 插件设置，文件名后缀设置为生成转换后的文件名后缀。比如，要转换 <code>first.md</code>，则当前目录下转换后的文件名为 <code>first_nex.md</code>。</li><li>只包含（不包含）：仅（不）转换包含自定义设置的图床链接。</li><li>上传文件（文件夹），等待转换完成，片刻即可在当前目录生成自定义文件名后缀的转换完成的文件了。</li></ul></li></ul><p>PicGo 跟 Typora 的联动是我选择它们的一大原因。直接拖拽或直接将剪贴板图片粘贴进 Typora，便可实现自动上传到 PicGo 图床。如下所示：</p><p><img src="https://i.loli.net/2021/05/09/dzwympqSIjE1HDv.gif" alt="示例"></p><p>打开 Typora，使用快捷键 <code>Ctrl + ,</code> 进入偏好设置，找到「图像」修改相应设置选项。</p><ul><li>插入图片时选择「上传图片」，然后勾选「对本地图片应用规则」「对网络图片应用规则」「插入图片自动转义」。</li><li>上传服务设定：PicGo (app)，PicGo 路径：自己主机中安装的 <code>PicGo.exe</code> 的存放路径。</li><li>点击「验证图片上传选项」，如果 PicGo 里多出两张图片，就说明连接成功了。</li></ul><p><img src="https://i.loli.net/2021/05/09/LXUPIiNqDk3sTx8.png" alt="设置"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> layout </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Extrasolar Planets</title>
       <link href="2021/04/29/planets/"/>
       <url>2021/04/29/planets/</url>
